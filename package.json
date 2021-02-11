@@ -1,0 +1,19 @@
+{
+  "name": "seamfix-project",
+  "version": "1.0.0",
+  "description": "Seamfix Technical Assesment Solution By Abdulraheem Sherif Adavuruku",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Seamfix",
+    "Technical",
+    "Assesment",
+    "Abdulraheem",
+    "Sherif",
+    "Adavuruku"
+  ],
+  "author": "Abdulraheem Sherif Adavuruku",
+  "license": "ISC"
+}

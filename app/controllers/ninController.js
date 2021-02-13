@@ -140,14 +140,10 @@ exports.verify_phone_link_code = async (req,res,next)=>{
                     message:'Phone Number Already Linked'
                 });
             }else{
-                console.log('I got here !!')
                 if(ninRecordExist != false){
-                    console.log('Yeah !!',ninRecordExist.token,req.body.code)
                     //check the code is valid
                     const hash = await bcrypt.compare(req.body.code,ninRecordExist.token)
-                    console.log('hass',hash)
                     if(hash){
-                        console.log('Hash Passes')
                         //check the time is valid not expired
                         let expectedExpiry = dayjs(ninRecordExist.tokenExpiredDate).toString()
                         let currentTime = dayjs().add(1,'hour').toString()

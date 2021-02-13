@@ -152,7 +152,7 @@ exports.verify_phone_link_code = async (req,res,next)=>{
                         let expectedExpiry = dayjs(ninRecordExist.tokenExpiredDate).toString()
                         let currentTime = dayjs().add(1,'hour').toString()
                         if(expectedExpiry >= currentTime ){
-                            console.log('Time Passed', currentTime, expectedExpiry)
+                            // console.log('Time Passed', currentTime, expectedExpiry)
                             //debit from user wallet
                             let userExist = await UsersInformation.findOne({ 
                                 where: {NIN: ninRecordExist.NIN},

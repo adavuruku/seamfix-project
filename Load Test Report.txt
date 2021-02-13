@@ -1,0 +1,126 @@
+##################################
+# Load Test Report
+###################################
+I have use node module called loadtest and the documentation can be found at https://www.npmjs.com/package/loadtest
+The load test file can be found in this directory path [seamfix-project/LoadTest]
+This directory contains a well design load test file for every REST API endpoints in this project
+# Bellow are the outputs of the Load Test Result:
+   # 1. 
+        url: https://seamfix-api.herokuapp.com/api/user/add
+
+        Purpose: To create a user Account
+
+        TestFile: LoadTest/createUser.js
+
+        Test Result:
+        
+            {
+                totalRequests: 294,
+                totalErrors: 293,
+                totalTimeSeconds: 60.004594100000006,
+                rps: 5,
+                meanLatencyMs: 1043.8,
+                maxLatencyMs: 1467,
+                minLatencyMs: 931,
+                percentiles: { '50': 1026, '90': 1098, '95': 1158, '99': 1417 },
+                errorCodes: { '422': 293 },
+                instanceIndex: 0
+            }
+            Tests run successfully
+    
+        Explanation:
+            I have create a load test that runs 294 request per minute and 5 request in a seconds concurrently, and the outputs indicates that it took a total of
+            60.0046MS to accept and process the request.
+
+            Grouping the request response time in Percentiles(%)
+            50% of the request took 1026MS, 90% took 1098MS, 95% took 1158MS, 99% 1417MS. 
+            Where MS(Milliseconds)
+    ---------------------------------------------------------------------------------------------------------------
+    # 2. 
+        url: https://seamfix-api.herokuapp.com/api/user/wallet/credit
+
+        Purpose: To create a user Account
+
+        TestFile: LoadTest/topWallet.js
+
+        Test Result:
+            {
+                totalRequests: 294,
+                totalErrors: 0,
+                totalTimeSeconds: 60.003211801,
+                rps: 5,
+                meanLatencyMs: 1020.9,
+                maxLatencyMs: 1392,
+                minLatencyMs: 945,
+                percentiles: { '50': 1012, '90': 1065, '95': 1094, '99': 1253 },
+                errorCodes: {},
+                instanceIndex: 0
+            }
+            Tests run successfully
+    
+        Explanation:
+            I have create a load test that runs 294 request per minute and 5 request in a seconds concurrently, and the outputs indicates that it took a total of
+            60.0032MS to accept and process the request. 
+            Grouping the request response time in Percentiles(%)
+            50% of the request took 1012MS, 90% took 1065MS, 95% took 1194MS, 99% 1253MS. 
+            Where MS(Milliseconds)
+    
+    ---------------------------------------------------------------------------------------------------------------
+    # 3. 
+        url: https://seamfix-api.herokuapp.com/api/user/add/phone
+
+        Purpose: To Initiate Linking Phone to NIN and getting verification code
+
+        TestFile: LoadTest/linkPhoneToNin.js
+
+        Test Result:
+            {
+                totalRequests: 294,
+                totalErrors: 0,
+                totalTimeSeconds: 60.004107600000005,
+                rps: 5,
+                meanLatencyMs: 1115,
+                maxLatencyMs: 1409,
+                minLatencyMs: 1031,
+                percentiles: { '50': 1100, '90': 1197, '95': 1233, '99': 1366 },
+                errorCodes: {},
+                instanceIndex: 0
+            }
+            Tests run successfully
+    
+        Explanation:
+            I have create a load test that runs 294 request per minute and 5 request in a seconds concurrently, and the outputs indicates that it took a total of
+            60.0041MS to accept and process the request. 
+            Grouping the request response time in Percentiles(%)
+            50% of the request took 1100MS, 90% took 1197MS, 95% took 1233MS, 99% 1366MS. 
+            Where MS(Milliseconds)
+
+    ---------------------------------------------------------------------------------------------------------------
+    # 4. 
+        url: https://seamfix-api.herokuapp.com/api/user/add/phone
+
+        Purpose: To verify the verification code and finally link the Phone to NIN
+
+        TestFile: LoadTest/linkPhoneToNin.js
+
+        Test Result:
+            {
+                totalRequests: 145,
+                totalErrors: 142,
+                totalTimeSeconds: 60.003595200999996,
+                rps: 2,
+                meanLatencyMs: 29594.3,
+                maxLatencyMs: 31196,
+                minLatencyMs: 974,
+                percentiles: { '50': 31027, '90': 31082, '95': 31125, '99': 31195 },
+                errorCodes: { '422': 4, '503': 138 },
+                instanceIndex: 0
+            }
+            Tests run successfully
+    
+        Explanation:
+            I have create a load test that runs 145 request per minute and 5 request in a seconds concurrently, and the outputs indicates that it took a total of
+            60.0036MS to accept and process the request. 
+            Grouping the request response time in Percentiles(%)
+            50% of the request took 31027MS, 90% took 31082MS, 95% took 31125MS, 99% 31195MS. 
+            Where MS(Milliseconds)

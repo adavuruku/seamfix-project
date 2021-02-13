@@ -7,15 +7,14 @@ const options = {
 	concurrency: 5,
 	method: 'POST',
 	body:{
-		"firstName":"Jumai",
-		"lastName": "AlHassan",
-		"nin": "13121342111"
-	},
+        "nin": "30112221903",
+        "phoneNumber":"08123142101"
+   },
 	requestsPerSecond:5,
 	maxSeconds:60,
 	requestGenerator: (params, options, client, callback) => {
 		options.headers['Content-Type'] = 'application/json';
-		options.path = '/api/user/add';
+		options.path = '/api/user/add/phone';
 		const request = client(options, callback);
 		return request;
 	}

@@ -175,7 +175,8 @@ exports.verify_phone_link_code = async (req,res,next)=>{
                                     NIN:ninRecordExist.NIN,
                                     previousAmount:previousWalletAmount,
                                     currentAmount:balance_Amount,
-                                    amountPaid:creditAmount
+                                    amountPaid:creditAmount,
+                                    transactionType:'Debit'
                                 },{ transaction: t })
                 
                                 //finally link the bvn

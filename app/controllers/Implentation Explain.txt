@@ -1,0 +1,50 @@
+The Implementation process:
+
+Assumption
+    1. Since we are Linking mobile phone number to NIN I assume a NIN records for all users that are expected to
+    use the system exist. so I decide to create an API that gives users access to create an account with there
+    NIN Number.
+
+    2. Since users are goin to be charge for every successfull link of there phone to NIN, I also add a
+    wallet to the users record and create an API endpoints to enable users top up(credit) there wallet balance.
+    The user is expected to provide there NIN and amount to credit there wallet, after successfull deduction
+    the transaction is then log as debit transaction
+
+    3. This stage is where the phone linking process begins, users are expected to provide a valid NIN and
+    phone number in other to request for a [Phone No. to NIN linking]. After providing the correct information, a verification
+    code is forwarded as text message to the users provided phone number.
+    The verification code has an expiry time of 10 minutes and is linked to the phone No. thats use to Make
+    the request, the code is also hashed and save into the database.
+    (Security: The code is hash before saving to the database for further security measures).
+
+    I also provide an API endpoints to achieve this.
+
+    4. In this stage, I provide an API endpoint for verifying the verification code. To achieve this, the user is expected to
+    provide the phone number use in getting the verification code and the verification code as well.
+    The code is then verified against the code and phone number stored in the database, the code expiry
+    time is also checked to make sure is withing the time frame set.
+
+    If all the verification process is passed, the user wallet is then checked to make sure the balance 
+    is more than the deduction rate of N500, if this verification is passed, the user wallet is then deducted and
+    the transaction is logged as a debit transaction.
+
+    # External Service Used
+    1. Voyage (Nexmo)
+        Voyage trial version is use as mobile messaging channel to implement these project.
+        Note: Voyage trial version can only send message to registered Phone No., so if theres need to test the mobile 
+        messaging, you can provide a Phone No. for me to add to the trial account.
+
+    # Technology Use
+        1. RESTFULL API
+            I use NodeJs/Express to build the API endpoints.
+        2. Database Technology
+            I use Postgress RDBMS to build the database
+        3. Hashing Algorithm
+            I use bcrypt to hash the verificiation code
+        4. ORM Technology
+            Sequelize
+        5. Load Test Implementation
+            loadtest node modules (https://www.npmjs.com/package/loadtest)
+        6. API Testing and Documentation 
+            (POSTMAN)
+        

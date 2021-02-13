@@ -1,9 +1,7 @@
 const {Sequelize,Op} = require('sequelize');
-// const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: '../../.env' });
 const { Validator } = require('node-input-validator')
-
+const db = require('../../models');
 
 const {UsersInformation,WalletTransaction} = require('../../models/index');
 
@@ -51,6 +49,7 @@ exports.add_new_user = async (req,res,next)=>{
 
 
 exports.credit_user_wallet = async (req,res,next)=>{
+    const t = await db.sequelize.transaction();
     try {
         const v = new Validator(req.body, {
             nin: "required|string|minLength:11|maxLength:11",
@@ -73,31 +72,22 @@ exports.credit_user_wallet = async (req,res,next)=>{
                 },
                 {
                     where:{NIN: req.userInfo.NIN }
-                }
+                },{ transaction: t }
             )
-
-            
-            //if u can update it log it
-            if(updatedUserWallet){
-                let walletTransaction = await WalletTransaction.create({
-                    NIN:req.userInfo.NIN,
-                    previousAmount:previousWalletAmount,
-                    currentAmount:tot_Amount,
-                    amountPaid:creditAmount
-                })
-
-                return res.status(200).json({
-                    message:'Created',
-                    walletTransaction
-                });
-            }
-            return res.status(422).json({
-                message:'Fail Transaction'
-            });
-            
-            
+            let walletTransaction = await WalletTransaction.create({
+                NIN:req.userInfo.NIN,
+                previousAmount:previousWalletAmount,
+                currentAmount:tot_Amount,
+                amountPaid:creditAmount
+            },{ transaction: t })
+            await t.commit();
+            return res.status(200).json({
+                message:'Created',
+                walletTransaction
+            });           
         }
     } catch (error) {
+        await t.rollback();
         return res.status(500).json({
             message:'Fail',
             error:error

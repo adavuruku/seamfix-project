@@ -22,6 +22,18 @@ let  is_phone_verified = async (phoneNumber)=>{
     // console.log('NA AM', (phoneExist ? (phoneExist.status? true:phoneExist):false))
     return (phoneExist ? (phoneExist.status? true:phoneExist):false)
 }
+
+let sendCodeToUserPhone = async (phoneNumber)=>{
+    const nexmo = new Nexmo({
+        apiKey: process.env.API_KEY,
+        apiSecret: process.env.API_SECRET,
+    }); 
+    let phoneNumberUser =  phoneNumber.substring(1,phoneNumber.length)
+    const from = 'FGN-NIN';
+    const to = '234'+phoneNumberUser;
+    const text = 'Link NIN - Phone Code ' + verificationCode;
+    nexmo.message.sendSms(from, to, text);
+}
 exports.add_new_phone_to_nin = async (req,res,next)=>{
     try {
         const v = new Validator(req.body, {
@@ -78,16 +90,7 @@ exports.add_new_phone_to_nin = async (req,res,next)=>{
                 
                 if(ninPhoneRecord){
                     // send mobile message to the user
-                    const nexmo = new Nexmo({
-                        apiKey: process.env.API_KEY,
-                        apiSecret: process.env.API_SECRET,
-                    });
-                    //   ninRecordExist.phoneNumber.trim()
-                    let phoneNumber =  ninRecordExist.phoneNumber.trim().substring(1,ninRecordExist.phoneNumber.trim().length)
-                    const from = 'Vonage APIs';
-                    const to = '234'+phoneNumber;
-                    const text = 'Link NIN - Phone Code ' + verificationCode;
-                    nexmo.message.sendSms(from, to, text);
+                    // sendCodeToUserPhone(ninRecordExist.phoneNumber.trim())
 
                     return res.status(200).json({
                         message:'Created',

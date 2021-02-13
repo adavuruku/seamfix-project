@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       NIN: {
-        type: Sequelize.DataTypes.STRING(11),
+        type: Sequelize.DataTypes.STRING(15),
         references: {
           model: {
             tableName: 'UsersInformations'
@@ -18,7 +18,7 @@ module.exports = {
         },
         allowNull: false
       },
-      phoneNumber: {type: Sequelize.STRING(11),unique:true,allowNull: false},
+      phoneNumber: {type: Sequelize.STRING(15),unique:true,allowNull: false},
       status: {type: Sequelize.BOOLEAN, defaultValue:false},
       token: {type: Sequelize.STRING,allowNull: false},
       tokenExpiredDate: {allowNull: false, type: Sequelize.STRING},

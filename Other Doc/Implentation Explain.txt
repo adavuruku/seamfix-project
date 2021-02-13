@@ -1,5 +1,6 @@
+-------------------------------------------------------------
 The Implementation process:
-
+--------------------------------------------------------------
     1. Since we are Linking mobile phone number to NIN I assume a NIN records for all users that are expected to
     use the system exist. so I decide to create an API that gives users access to create an account with there
     NIN Number.
@@ -81,3 +82,5 @@ The Implementation process:
 
         5. Total wallet credits
          Answer: You can sum all the walletBallance from UsersInformations table.
+
+    POSTMAN API DOC https://documenter.getpostman.com/view/8490713/TWDRszKD

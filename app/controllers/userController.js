@@ -15,7 +15,7 @@ exports.add_new_user = async (req,res,next)=>{
         const v = new Validator(req.body, {
             firstName: "required|string|minLength:1",
             lastName: "required|string|minLength:1",
-            nin: "required|string|minLength:11|maxLength:11",
+            nin: "required|string|minLength:11|maxLength:11|digits:11",
             walletAmount: "decimal"
         })
 
@@ -26,7 +26,6 @@ exports.add_new_user = async (req,res,next)=>{
             });
         }else{
             //create new user
-            console.log("I dey here")
             let userInformation = await UsersInformation.create(
             {
                 firstName : req.body.firstName.trim(),
@@ -52,7 +51,7 @@ exports.credit_user_wallet = async (req,res,next)=>{
     const t = await db.sequelize.transaction();
     try {
         const v = new Validator(req.body, {
-            nin: "required|string|minLength:11|maxLength:11",
+            nin: "required|string|minLength:11|maxLength:11|digits:11",
             walletAmount: "required|decimal"
         })
         const matched = await v.check()
@@ -93,4 +92,15 @@ exports.credit_user_wallet = async (req,res,next)=>{
             error:error
         });
     }
+}
+
+
+exports.testvalidation = async (req,res,next)=>{
+        const v = new Validator(req.body, {
+            nin: "required|phoneNumber"
+        })
+        const matched = await v.check()
+        return res.status(500).json({
+            message:matched
+        });
 }

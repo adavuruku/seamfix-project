@@ -1,0 +1,83 @@
+The Implementation process:
+
+    1. Since we are Linking mobile phone number to NIN I assume a NIN records for all users that are expected to
+    use the system exist. so I decide to create an API that gives users access to create an account with there
+    NIN Number.
+    
+    2. Since users are goin to be charge for every successfull link of there phone to NIN, I also add a
+    wallet to the users record and create an API endpoints to enable users top up(credit) there wallet balance.
+    The user is expected to provide there NIN and amount to credit there wallet, after successfull deduction
+    the transaction is then log as debit transaction
+
+    3. This stage is where the phone linking process begins, users are expected to provide a valid NIN and
+    phone number in other to request for a [Phone No. to NIN linking]. After providing the correct information, a verification
+    code is forwarded as text message to the users provided phone number.
+    The verification code has an expiry time of 10 minutes and is linked to the phone No. thats use to Make
+    the request, the code is also hashed and save into the database.
+    (Security: The code is hash before saving to the database for further security measures).
+
+    I also provide an API endpoints to achieve this.
+
+    4. In this stage, I provide an API endpoint for verifying the verification code. To achieve this, the user is expected to
+    provide the phone number use in getting the verification code and the verification code as well.
+    The code is then verified against the code and phone number stored in the database, the code expiry
+    time is also checked to make sure is withing the time frame set.
+
+    If all the verification process is passed, the user wallet is then checked to make sure the balance 
+    is more than the deduction rate of N500, if this verification is passed, the user wallet is then deducted and
+    the transaction is logged as a debit transaction.
+
+    # Security Or Validation Considered:
+    1. We make sure two or more users dont register thesame NIN Number, so every creation of new users I check
+    to verify the NIN doesnt exist
+    2. We make sure the provided NIN and Phone Number is Valid (thats each value is digit and it doesnt contains Alphabet or any other 
+    type of Character or symbol)
+    3. I make sure the amount to credit to a wallet is decimal and above zero
+    4. I send codes to users phone to make sure the owner of the phone is making the link request.
+    5. I also hash the code before saving to Database, with this if any other user including me 
+        have access to the database, the code is still secured.
+    6. The code is also timed so to avoid theft.
+    7. I made sure the API is designed to prevent users from linking one phone Number to two or more different NIN
+    8. I made sure users with two or more phone numbers can link all the phone numbers to a single NIN.
+
+  -------------------------------------------------------------------------------
+    # Technology Use
+        1. RESTFULL API
+            I use NodeJs/Express to build the API endpoints.
+        2. Database Technology
+            I use Postgress RDBMS to build the database
+        3. Hashing Algorithm
+            I use bcrypt to hash the verificiation code
+        4. ORM Technology
+            Sequelize
+        5. Load Test Implementation
+            loadtest node modules (https://www.npmjs.com/package/loadtest)
+        6. API Testing and Documentation 
+            (POSTMAN)
+        7. Voyage (Nexmo)
+            Voyage trial version is use as mobile messaging channel to implement these project.
+            Note: Voyage trial version can only send message to registered Phone No., so if theres need to test the mobile 
+            messaging, you can provide a Phone No. for me to add to the trial account.
+    ----------------------------------------------------------------------------------
+    # Can this solve the REPORT FUNCTIONALITIES - YES
+        Available Tables: [
+            NINPhoneRecords - All Phone Link To NIN are stored Here,
+            UsersInformations - All users Informaion including wallet ballance are stored here.
+            WalletTransactions - All Debit and Credit Of Wallet are stored here
+        ]
+        1. A report of all requests to the API showing the user that made the request, 
+        the NIN, date, time, phone number, status.
+        Answer: You can fetch from NINPhoneRecords table searching by the user NIN
+
+        2. A reconciliation report that shows how much we have billed the users that have 
+        made requests on the system (assume all users have wallets being debited on every transaction)
+        Answer: You can fetch from WalletTransactions table searching by the user NIN and transactionType column (Debit)
+
+        3. Total wallet balance across all users
+        Answer: You can fetch User walletBallance from UsersInformations table.
+
+        4. Total wallet debits & credits
+            Answer: You can sum all the amountPaid in WalletTransactions filtered by transactionType [Credit/Debit]
+
+        5. Total wallet credits
+         Answer: You can sum all the walletBallance from UsersInformations table.

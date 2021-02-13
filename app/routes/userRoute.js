@@ -11,4 +11,5 @@ router.post('/add', check_nin_not_exist, userController.add_new_user);
 
 //route to top up user wallet
 router.post('/wallet/credit', check_nin_exist, userController.credit_user_wallet);
+// router.post('/test', userController.testvalidation);
 module.exports = router;

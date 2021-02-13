@@ -13,6 +13,7 @@ dayjs.extend(timezone)
 dayjs.tz.setDefault("Africa/Lagos") 
 
 const {UsersInformation,WalletTransaction,NINPhoneRecord} = require('../../models/index');
+const e = require('express');
 
 let  is_phone_verified = async (phoneNumber)=>{
     //verify the phone is not yet link
@@ -23,6 +24,16 @@ let  is_phone_verified = async (phoneNumber)=>{
     return (phoneExist ? (phoneExist.status? true:phoneExist):false)
 }
 
+let convertPhone = (phoneNumber)=>{
+    if(phoneNumber.length == 11){
+        let newPhone =  phoneNumber.substring(1,phoneNumber.length)
+        return '234' + newPhone
+    }else if(phoneNumber.length == 14){
+        return phoneNumber.substring(1,phoneNumber.length)
+    }else{
+        return phoneNumber
+    } 
+}
 let sendCodeToUserPhone = async (phoneNumber)=>{
     const nexmo = new Nexmo({
         apiKey: process.env.API_KEY,
@@ -37,8 +48,8 @@ let sendCodeToUserPhone = async (phoneNumber)=>{
 exports.add_new_phone_to_nin = async (req,res,next)=>{
     try {
         const v = new Validator(req.body, {
-            phoneNumber: "required|string|minLength:11|maxLength:11",
-            nin: "required|string|minLength:11|maxLength:11"
+            phoneNumber: "required|phoneNumber",
+            nin: "required|string|minLength:11|maxLength:11|digits:11"
         })
 
         const matched = await v.check()
@@ -47,6 +58,7 @@ exports.add_new_phone_to_nin = async (req,res,next)=>{
                 message:'Invalid Data Input'
             });
         }else{
+            req.body.phoneNumber = convertPhone(req.body.phoneNumber)
             //Check if phone is already link to bvn
             let ninRecordExist = await is_phone_verified(req.body.phoneNumber)
             if(ninRecordExist==true){
@@ -123,7 +135,7 @@ exports.verify_phone_link_code = async (req,res,next)=>{
     const t = await db.sequelize.transaction();
     try {
         const v = new Validator(req.body, {
-            phoneNumber: "required|string|minLength:11|maxLength:11",
+            phoneNumber: "required|phoneNumber",
             code: "required|string"
         })
         const matched = await v.check()
@@ -133,6 +145,7 @@ exports.verify_phone_link_code = async (req,res,next)=>{
                 message:'Invalid Data Input'
             });
         }else{
+            req.body.phoneNumber = await convertPhone(req.body.phoneNumber)
             let ninRecordExist = await is_phone_verified(req.body.phoneNumber)
             // console.log('Yuppy',ninRecordExist)
             if(ninRecordExist==true){

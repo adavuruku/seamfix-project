@@ -18,10 +18,10 @@ module.exports = {
         },
         allowNull: false
       },
-      PhoneNumber: {type: Sequelize.STRING(11),unique: true,allowNull: false},
+      phoneNumber: {type: Sequelize.STRING(11),unique:true,allowNull: false},
       status: {type: Sequelize.BOOLEAN, defaultValue:false},
       token: {type: Sequelize.STRING,allowNull: false},
-      tokenExpiredDate: {allowNull: false, type: Sequelize.DATE},
+      tokenExpiredDate: {allowNull: false, type: Sequelize.STRING},
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

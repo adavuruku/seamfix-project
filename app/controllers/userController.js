@@ -4,14 +4,7 @@ const {Sequelize,Op} = require('sequelize');
 require('dotenv').config({ path: '../../.env' });
 const { Validator } = require('node-input-validator')
 
-//generating webtoken
-// const token = (user) =>{
-//     return jwt.sign({
-//         user:user
-//     },
-//    process.env.MY_SECRET);
-// }
-//user Create
+
 const {UsersInformation,WalletTransaction} = require('../../models/index');
 
 /**
@@ -82,6 +75,8 @@ exports.credit_user_wallet = async (req,res,next)=>{
                     where:{NIN: req.userInfo.NIN }
                 }
             )
+
+            
             //if u can update it log it
             if(updatedUserWallet){
                 let walletTransaction = await WalletTransaction.create({

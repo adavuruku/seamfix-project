@@ -13,8 +13,8 @@ NINPhoneRecord
     [
         1. NIN must exist
         2. User must have a wallet account above N50
+        
         3. The phone must not be succesfully link to another user before (phone, status)
-        4. The phone and NIN must not be link before to thesame  (NIN, status, p)
         4. Send a verification Code that expires with time
     ]
     /add/phone/verify

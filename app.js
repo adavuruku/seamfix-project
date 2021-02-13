@@ -14,9 +14,9 @@ app.use(bodyParser.json());
 
 
 const usersRoutes = require('./app/routes/userRoute');
-// const ninRoutes = require('./app/routes/ninRoute');
+const ninRoutes = require('./app/routes/ninRoute');
 
-app.use('/api/user',usersRoutes);
+app.use('/api/user',usersRoutes,ninRoutes);
 // app.use('/api/user',ninRoutes);
 
 app.use((req,res,next)=>{

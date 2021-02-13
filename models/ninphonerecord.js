@@ -20,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(11),
       allowNull: false
     },
-    PhoneNumber: {type: DataTypes.STRING(11),unique: true,allowNull: false},
+    phoneNumber: {type: DataTypes.STRING(11),unique: true,allowNull: false},
     status: {type: DataTypes.BOOLEAN, defaultValue:false},
     token: {type: DataTypes.STRING,allowNull: false},
-    tokenExpiredDate: {allowNull: false, type: DataTypes.DATE},
+    tokenExpiredDate: {allowNull: false, type: DataTypes.STRING},
   }, {
     sequelize,
     modelName: 'NINPhoneRecord',

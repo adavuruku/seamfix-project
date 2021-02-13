@@ -1,9 +1,10 @@
+require('dotenv').config();
 const {Sequelize,Op} = require('sequelize');
-require('dotenv').config({ path: '../../.env' });
 const { Validator } = require('node-input-validator')
 const random = require('random')
 const bcrypt = require('bcrypt')
 const db = require('../../models');
+const Nexmo = require('nexmo');
 
 //day js date
 const dayjs = require('dayjs')
@@ -18,7 +19,7 @@ let  is_phone_verified = async (phoneNumber)=>{
     let phoneExist = await NINPhoneRecord.findOne({ 
         where:{phoneNumber: phoneNumber.trim()}
     })
-    console.log('NA AM', (phoneExist ? (phoneExist.status? true:phoneExist):false))
+    // console.log('NA AM', (phoneExist ? (phoneExist.status? true:phoneExist):false))
     return (phoneExist ? (phoneExist.status? true:phoneExist):false)
 }
 exports.add_new_phone_to_nin = async (req,res,next)=>{
@@ -76,7 +77,18 @@ exports.add_new_phone_to_nin = async (req,res,next)=>{
                 }
                 
                 if(ninPhoneRecord){
-                    //send message to user
+                    // send mobile message to the user
+                    const nexmo = new Nexmo({
+                        apiKey: process.env.API_KEY,
+                        apiSecret: process.env.API_SECRET,
+                    });
+                    //   ninRecordExist.phoneNumber.trim()
+                    let phoneNumber =  ninRecordExist.phoneNumber.trim().substring(1,ninRecordExist.phoneNumber.trim().length)
+                    const from = 'Vonage APIs';
+                    const to = '234'+phoneNumber;
+                    const text = 'Link NIN - Phone Code ' + verificationCode;
+                    nexmo.message.sendSms(from, to, text);
+
                     return res.status(200).json({
                         message:'Created',
                         'VerificationInfo':{

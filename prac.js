@@ -28,3 +28,8 @@ dayjs.tz.setDefault("Africa/Lagos") //default time zone
  console.log(k,k>j)
 
  console.log(dayjs.tz.guess()) //guessing timezone
+
+ console.log('234'.concat('08164377187'[0]))
+
+ let gor = '08164377187'.substring(1, '08164377187'.length);
+ console.log(gor)

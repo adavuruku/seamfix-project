@@ -11,7 +11,7 @@ module.exports = {
       firstName: {type: Sequelize.STRING(80),allowNull: false},
       lastName: {type: Sequelize.STRING(80),allowNull: false},
       walletAmount: {type: Sequelize.DECIMAL(15, 2) ,defaultValue: 0},
-      NIN: {type: Sequelize.STRING(15),primaryKey: true,allowNull: false},
+      NIN: {type: Sequelize.STRING(11),primaryKey: true,allowNull: false},
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       NIN: {
-        type: Sequelize.DataTypes.STRING(15),
+        type: Sequelize.DataTypes.STRING(11),
         references: {
           model: {
             tableName: 'UsersInformations'

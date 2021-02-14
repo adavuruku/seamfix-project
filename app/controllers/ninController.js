@@ -108,7 +108,7 @@ exports.add_new_phone_to_nin = async (req,res,next)=>{
                         message:'Created',
                         'VerificationInfo':{
                             method:'POST',
-                            url:'http://localhost:3000/api/user/verify/code',
+                            url:'https://seamfix-api.herokuapp.com/api/user/verify/code',
                             body:{
                                 NIN:req.userInfo.NIN,verificationCode
                             }

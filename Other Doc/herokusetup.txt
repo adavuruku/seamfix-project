@@ -13,7 +13,7 @@
 
 6. add your project to the project root path (heroku git:remote -a <app name>)
 
-7. then push to heroku (git push heroku origin / git push heroku / git push heroku master)
+7. then push to heroku (git push heroku / git push heroku master)
 
 8. to implement db migration
     1. go to dashboard and add pgresource / you databasse plugin to the App
@@ -30,3 +30,7 @@
     heroku config:set API-KEY=ASASA
 
     or go to the control pannel and set them
+
+
+to login to heroku - heroku login -> to use the browser or
+heroku login -i -> to use terminal
